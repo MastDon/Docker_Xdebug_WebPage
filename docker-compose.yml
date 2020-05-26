@@ -1,0 +1,22 @@
+version: '3'
+services:
+  apache-xdebug-27:
+    build:
+      context: docker/php-72-apache-xdebug-27
+    volumes:
+      - ./public:/var/www/html
+#      - ../Test/public:/var/www/html
+    environment:
+      XDEBUG_CONFIG: "remote_host=192.168.222.1 remote_enable=1"
+      PHP_IDE_CONFIG: "serverName=Docker"
+    ports:
+    - "333:80"
+    networks:
+      - internal
+networks:
+  internal:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 192.168.222.0/28
